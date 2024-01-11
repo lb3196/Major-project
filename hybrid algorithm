@@ -1,0 +1,43 @@
+from Crypto.Cipher import Blowfish
+from phe import paillier
+import base64
+
+# Generate Paillier key pair
+public_key, private_key = paillier.generate_paillier_keypair()
+
+def homomorphic_encryption(data):
+    # Encrypt data using Paillier encryption
+    encrypted_data = [public_key.encrypt(x) for x in data]
+    return encrypted_data
+
+def blowfish_encryption(data, key):
+    cipher = Blowfish.new(key, Blowfish.MODE_ECB)
+    encrypted_data = cipher.encrypt(data.encode())
+    return base64.b64encode(encrypted_data)
+
+def hybrid_algorithm(data):
+    # Step 1: Homomorphic Encryption
+    encrypted_data_homomorphic = homomorphic_encryption(data)
+
+    # Step 2: Convert encrypted data to string for Blowfish
+    encrypted_data_str = [str(x.ciphertext()) for x in encrypted_data_homomorphic]
+    data_str = ','.join(encrypted_data_str)
+
+    # Step 3: Generate Blowfish key and encrypt homomorphically encrypted data
+    blowfish_key = b'secret_key'
+    encrypted_data_hybrid = blowfish_encryption(data_str, blowfish_key)
+
+    return encrypted_data_hybrid
+
+def main():
+    # Example data
+    original_data = [10, 20, 30, 40, 50]
+
+    # Apply the hybrid algorithm
+    encrypted_result = hybrid_algorithm(original_data)
+
+    print(f"Original Data: {original_data}")
+    print(f"Encrypted Result: {encrypted_result}")
+
+if __name__ == "__main__":
+    main()
