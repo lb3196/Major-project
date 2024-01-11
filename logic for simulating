@@ -1,0 +1,35 @@
+import random
+
+class BiomedicalSensor:
+    def measure_data(self):
+        # Simulate data measurement
+        return random.randint(60, 100)
+
+class Wearable:
+    def measure_data(self):
+        # Simulate data measurement
+        return random.randint(50, 120)
+
+class MedicalImplant:
+    def measure_data(self):
+        # Simulate data measurement
+        return random.randint(70, 110)
+
+def main():
+    # Create instances of devices
+    sensor = BiomedicalSensor()
+    wearable = Wearable()
+    implant = MedicalImplant()
+
+    # Simulate data collection
+    sensor_data = sensor.measure_data()
+    wearable_data = wearable.measure_data()
+    implant_data = implant.measure_data()
+
+    # Print simulated data
+    print(f"Biomedical Sensor Data: {sensor_data}")
+    print(f"Wearable Data: {wearable_data}")
+    print(f"Medical Implant Data: {implant_data}")
+
+if __name__ == "__main__":
+    main()
